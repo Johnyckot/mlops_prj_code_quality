@@ -1,0 +1,58 @@
+# The main job for mlops_project.
+resources:
+  jobs:
+    mlops_project_job:
+      name: mlops_project_job
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      #email_notifications:
+      #  on_failure:
+      #    - your_email@example.com
+
+      tasks:
+        - task_key: run_setup
+          notebook_task:
+            notebook_path: ../src/0_setup.ipynb
+
+        - task_key: run_ingest
+          depends_on:
+            - task_key: run_setup
+          notebook_task:
+            notebook_path: ../src/1_ingest_data.ipynb
+
+        - task_key: run_model_training
+          depends_on:
+            - task_key: run_ingest
+          notebook_task:
+            notebook_path: ../src/2_train_model.ipynb
+
+        - task_key: run_model_registration
+          depends_on:
+            - task_key: run_model_training
+          notebook_task:
+            notebook_path: ../src/3_model_registration.ipynb
+
+        - task_key: model_validation_and_deployment
+          depends_on:
+            - task_key: run_model_registration
+          notebook_task:
+            notebook_path: ../src/4_model_validation.ipynb        
+
+    # setup:
+    #   name: setup UC objects      
+    #   tasks:
+    #     - task_key: notebook_task
+    #       notebook_task:
+    #         notebook_path: ../src/0_setup.ipynb
+
+    # ingest:
+    #   name: ingest data into delta lake table
+    #   tasks:
+    #     - task_key: notebook_task
+    #       notebook_task:
+    #         notebook_path: ../src/1_ingest_data.ipynb            
