@@ -2,13 +2,11 @@
 
 ## Table of Contents
 1. [Problem Description](#1-problem-description)
-2. [Data Analysis](#2-data-analysis)
-3. [Exploratory Data Analysis Results](#3-exploratory-data-analysis-results)
-4. [Models Training and Evaluation](#4-models-training-and-evaluation)
-5. [Source Code](#5-source-code)
-6. [Dependency Management](#6-dependency-management)
-7. [Containerization](#7-containerization)
-8. [Test Run](#8-test-run)
+2. [Project structure and reproducibility](## 2. Project structure and reproducibility)
+3. [Databricks Cloud deployment and reproducability](## 3. Databricks Cloud deployment and reproducability)
+4. [Workflow orchestration](## 4. Workflow orchestration)
+5. [Experiment tracking and model registry](## 5. Experiment tracking and model registry)
+6. [Deployment](## 6. Deployment)
 
 ## 1. Problem Description
 Project is aiming to predict a probabilty of a software code to have a defect. For ML model training it uses one of the NASA Metrics Data Program defect data sets. Data from software for storage management for receiving and processing ground data. Data comes from McCabe and Halstead features extractors of source code. These features were defined in the 70s in an attempt to objectively characterize code features that are associated with software quality.
@@ -88,17 +86,20 @@ In order to deploy the project to the Databricks cloud platform you need an acce
 Deployment steps:
  - Clone the repo;
  - Initialize Databricks Bundle project using VScode extenson. (Alternatively use Databricks-CLI)
- - Deploy the Bundle project to the Databricks worksace using extension or CLI.  
+ - Deploy the Bundle project to the Databricks worksace using extension or CLI.
+   
 ![deployment](images\deployment_extension.png)
 
 ## 4. Workflow orchestration
    The workflow orchestration job is described in resources\mlops_project.job.yml. Once it is deployed on a worskace as a part of a bundle, it is available in Databricks UI. In scope of this project, the pipeline is configured to run daily. It also could be triggered  manually via UI or via databricks-cli.
+   
 ![orchestation UI](images\orchestration.png)
 
 ## 5. Experiment tracking and model registry
   During the 2_train_model step of the workflow the model is trained within a MLFlow experiment. The RandomForestClassifier is selected as the base model. 
   Each iteration of experiment training a model with a specific thet of tuning parameters( defined with hyperopt scope).
   Results of experiments could be tracked in a Databricks UI ('experiments' tab)
+  
 ![Experiment tracking](images\experiment_tracking.png)
 
   The 3_model_registration step of the workflow selects the best model from previous step (model with the best Accuracy metric) and then registers it in the Unity Catalog model registry as a 'candidate'. 
@@ -113,11 +114,14 @@ Deployment steps:
    - as a Web-Service for downstream consumers.
 
    The 5_model_usage.ipynb contains the code which deploys the model as a Spark-UDF on a Databricks Spark cluster. Then the model is used in a spark job to make predictions on a Spark DataFrame. 
+
 ![Spark UDF deployment](images\spark_udf_deployment.png)
    
    For deployment of the Production model as a web-service, Dtabricks model-serving endpoint was used:  
+
 ![Web deployment](images\web_deployment.png)  
    The funtionality could be tested by a test-script tests\test_web_model.py (running locally)  
+
 ![Web deployment test](images\web_deployment_test.png)   
 
    
