@@ -42,7 +42,7 @@ resources:
             - task_key: run_model_registration
           notebook_task:
             notebook_path: ../src/4_model_validation.ipynb        
-
+    
     # setup:
     #   name: setup UC objects      
     #   tasks:
