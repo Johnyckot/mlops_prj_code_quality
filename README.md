@@ -2,11 +2,11 @@
 
 ## Table of Contents
 1. [Problem Description](#1-problem-description)
-2. [Project structure and reproducibility](## 2. Project structure and reproducibility)
-3. [Databricks Cloud deployment and reproducability](## 3. Databricks Cloud deployment and reproducability)
-4. [Workflow orchestration](## 4. Workflow orchestration)
-5. [Experiment tracking and model registry](## 5. Experiment tracking and model registry)
-6. [Deployment](## 6. Deployment)
+2. [Project Structure and Reproducibility](#2-project-structure-and-reproducibility)
+3. [Databricks Cloud Deployment and Reproducibility](#3-databricks-cloud-deployment-and-reproducibility)
+4. [Workflow Orchestration](#4-workflow-orchestration)
+5. [Experiment Tracking and Model Registry](#5-experiment-tracking-and-model-registry)
+6. [Deployment](#6-deployment)
 
 ## 1. Problem Description
 Project is aiming to predict a probabilty of a software code to have a defect. For ML model training it uses one of the NASA Metrics Data Program defect data sets. Data from software for storage management for receiving and processing ground data. Data comes from McCabe and Halstead features extractors of source code. These features were defined in the 70s in an attempt to objectively characterize code features that are associated with software quality.
