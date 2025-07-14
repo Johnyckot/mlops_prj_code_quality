@@ -89,22 +89,22 @@ Deployment steps:
  - Clone the repo;
  - Initialize Databricks Bundle project using VScode extenson. (Alternatively use Databricks-CLI)
  - Deploy the Bundle project to the Databricks worksace using extension or CLI.  
-   ![deployment](images\deployment_extension.png)
+![deployment](images\deployment_extension.png)
 
 ## 4. Workflow orchestration
    The workflow orchestration job is described in resources\mlops_project.job.yml. Once it is deployed on a worskace as a part of a bundle, it is available in Databricks UI. In scope of this project, the pipeline is configured to run daily. It also could be triggered  manually via UI or via databricks-cli.
-   ![orchestation UI](images\orchestration.png)
+![orchestation UI](images\orchestration.png)
 
 ## 5. Experiment tracking and model registry
   During the 2_train_model step of the workflow the model is trained within a MLFlow experiment. The RandomForestClassifier is selected as the base model. 
   Each iteration of experiment training a model with a specific thet of tuning parameters( defined with hyperopt scope).
   Results of experiments could be tracked in a Databricks UI ('experiments' tab)
-   ![Experiment tracking](images\experiment_tracking.png)
+![Experiment tracking](images\experiment_tracking.png)
 
   The 3_model_registration step of the workflow selects the best model from previous step (model with the best Accuracy metric) and then registers it in the Unity Catalog model registry as a 'candidate'. 
   Then  the 4_model_validation step performs some validations of the candidate model (if it is correctly tagget, if the accurac is better then current Production model) and registers it as a 'Production' model. Results could be viewed in Databricks UI ('Models' tab)
 
-  ![Model registration](images\model_registration.png)
+![Model registration](images\model_registration.png)
 
 ## 6. Deployment
 
@@ -113,12 +113,12 @@ Deployment steps:
    - as a Web-Service for downstream consumers.
 
    The 5_model_usage.ipynb contains the code which deploys the model as a Spark-UDF on a Databricks Spark cluster. Then the model is used in a spark job to make predictions on a Spark DataFrame. 
-   ![Spark UDF deployment](images\spark_udf_deployment.png)
+![Spark UDF deployment](images\spark_udf_deployment.png)
    
    For deployment of the Production model as a web-service, Dtabricks model-serving endpoint was used:  
-   ![Web deployment](images\web_deployment.png)  
+![Web deployment](images\web_deployment.png)  
    The funtionality could be tested by a test-script tests\test_web_model.py (running locally)  
-   ![Web deployment test](images\web_deployment_test.png)   
+![Web deployment test](images\web_deployment_test.png)   
 
    
   
